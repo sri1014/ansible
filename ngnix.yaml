@@ -1,0 +1,25 @@
+- hosts: 172.31.39.180
+  become: True
+  tasks:
+  - name: configure nginx
+    yum:
+     name: http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+  - name: install ngnix
+    yum:
+     name: nginx
+     state: present
+  - name: Copying nginx configuration file
+    copy:
+     src: /home/ec2-user/codebase/nginx.conf
+     dest: /etc/nginx/nginx.conf
+    notify:
+    - retart nginx
+  - name: start nginx
+    service:
+     name: nginx
+     state: started
+     enabled: True
+  - name: retart nginx
+    service:
+     name: nginx
+     state: restarted   

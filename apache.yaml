@@ -1,0 +1,16 @@
+- hosts: 172.31.37.209
+  become: True
+  tasks:
+  - name: install apache 2
+    yum: 
+     name: httpd
+     state: present
+  - name: copying html file
+    copy:
+     src: /home/ec2-user/codebase/index.html
+     dest: /var/www/html
+  - name: start Httpd
+    service: 
+     name: httpd
+     state: started
+
